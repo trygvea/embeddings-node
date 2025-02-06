@@ -1,0 +1,16 @@
+version: "3.8"
+
+
+services:
+  test-pgvector:
+    image: ankane/pgvector:latest
+    container_name: embeddings-test
+    restart: always
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/.pgdata:/var/lib/postgresql/data
