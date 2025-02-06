@@ -35,7 +35,37 @@ If something goes even more wrong, you can always stop the database first with `
 # Running the app
 
 ## Indexing 
-`npm run dev`
+Create embeddings for 100 random wikipedia articles and store them in the local postgres database.
 
+`npm run index 100`
 
+## Searching
+Check if there are any rock artists amoung our indexed data:
+
+`npm run search "rock artist"`
+
+Sample output from my 1000 random indexed articles:
+```
+> embeddings-node@0.0.1 search
+> tsx src/index.ts -s Rock artist
+
+Connecting to database postgres://dev:dev@localhost:5432/dev
+Searching for content: Rock artist
+Search Results: [
+  {
+    resource_link: 'https://en.wikipedia.org/wiki/Dark_Horse_%E2%80%93_A_Live_Collection',
+    caption: 'Dark Horse – A Live Collection',
+    cosine_distance: 0.39703900903717815
+  },
+  {
+    resource_link: 'https://en.wikipedia.org/wiki/Phil_Stack',
+    caption: 'Phil Stack',
+    cosine_distance: 0.4036332663110951
+  },
+  {
+    resource_link: 'https://en.wikipedia.org/wiki/Russell_B_Jackson',
+    caption: 'Russell B Jackson',
+    cosine_distance: 0.4270296447349413
+  },
+```
 

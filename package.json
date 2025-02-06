@@ -8,6 +8,8 @@
     "lint": "eslint  src/ --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit",
     "dev": "tsx src/index.ts",
+    "index": "tsx src/index.ts -i",
+    "search": "tsx src/index.ts -s",
     "migrate:up": "node-pg-migrate up -m db/migrations",
     "migrate:down": "node-pg-migrate down -m db/migrations",
     "migrate:create": "node-pg-migrate create '<migration-name>' -m db/migrations -j sql"
