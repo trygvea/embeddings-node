@@ -6,6 +6,11 @@ It uses a postgres database with the [pgvector](https://github.com/pgvector/pgve
 # Installation
 Run `nmp install`
 
+## .env
+Run `npm run dotenv-init` 
+
+Or just copy the content of the `.env.example` file to the `.env` file. 
+
 ## Docker
 Make sure you have docker and docker-compose installed.
 
@@ -40,9 +45,9 @@ Create embeddings for 100 random wikipedia articles and store them in the local 
 `npm run index 100`
 
 ## Searching
-Check if there are any rock artists amoung our indexed data:
+Check if there are any rock artists among our indexed data:
 
-`npm run search "rock artist"`
+`npm run search "Rock artist"`
 
 Sample output from my 1000 random indexed articles:
 ```
