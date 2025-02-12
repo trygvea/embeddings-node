@@ -3,6 +3,8 @@ A simple example of implementing semantic search using wikipedia as a test corpu
 
 It uses a postgres database with the [pgvector](https://github.com/pgvector/pgvector) extension and create embeddings with the [`nomic-embed-text`](https://ollama.com/library/nomic-embed-text) model using [ollama](https://ollama.com/).
 
+See [corresponding blog post](https://www.kodemaker.no/blogg/2025-02-12-text-embeddings/) (in norwegian).
+
 # Installation
 Run `nmp install`
 
