@@ -19,9 +19,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@qdrant/js-client-rest": "^1.14.1",
     "commander": "^13.1.0",
-    "dotenv": "^16.4.7",
-    "pg": "^8.13.1"
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
