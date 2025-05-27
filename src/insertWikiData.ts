@@ -1,7 +1,5 @@
-import pg from "pg";
 import { createEmbedding } from "./ollamaEmbedding.js";
-import * as dotenv from "dotenv";
-const { Pool } = pg;
+import { initializeCollection, insertEmbedding as qdrantInsertEmbedding, getNextId } from "./qdrantClient.js";
 
 type WikiData = {
   title: string;
@@ -13,11 +11,8 @@ type WikiData = {
 const wikiUrl =
   "https://en.wikipedia.org/w/api.php?action=query&format=json&generator=random&grnnamespace=0&grnlimit=1&prop=info|extracts&inprop=url&explaintext=true";
 
-dotenv.config(); // Read database connection info from .env file
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+// Initialize Qdrant collection when this module is imported
+initializeCollection().catch(console.error);
 
 export const insertWikiData = async (count: number) => {
   for (let i = 0; i < count; i++) {
@@ -30,29 +25,17 @@ export const insertWikiData = async (count: number) => {
         const { title, extract } = wikiData;
         console.log("Indexing wiki article:", title);
         const embedding = await createEmbedding(extract);
-        insertEmbedding(wikiData, embedding);
+        const id = await getNextId();
+        insertEmbedding(id, wikiData, embedding);
       });
   }
 };
 
-const insertEmbedding = async ({ title, fullurl, extract }: WikiData, embedding: number[]) => {
-  const client = await pool.connect();
-  const query = `
-      INSERT INTO embedded_data (
-          caption, 
-          resource_link, 
-          embedding,
-          content
-      )
-      VALUES ($1, $2, $3, $4)
-      RETURNING *;
-    `;
+const insertEmbedding = async (id: number, { title, fullurl, extract }: WikiData, embedding: number[]) => {
   try {
-    const values = [title, fullurl, JSON.stringify(embedding), extract];
-    await client.query(query, values);
+    await qdrantInsertEmbedding(id, { title, fullurl, extract }, embedding);
+    console.log(`Successfully inserted embedding for "${title}" with ID ${id}`);
   } catch (err) {
-    console.error("Error inserting row:", err);
-  } finally {
-    client.release();
+    console.error("Error inserting embedding:", err);
   }
 };
